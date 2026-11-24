@@ -10,4 +10,14 @@ export class EmployeesService{
     @InjectRepository(EmployeeEntity)
     private readonly repo: Repository<EmployeeEntity>,
   ){}
+
+  async create(dto: CreateEmployeeDto): Promise<EmployeeEntity>{
+    const employee = this.repo.create(dto);
+    return this.repo.save(employee);
+  }
+
+  async findAll(): Promise<EmployeeEntity[]>{
+    return this.repo.find();
+  }
+
 }
