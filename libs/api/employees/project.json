@@ -1,0 +1,11 @@
+{
+  "name": "api-employees",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/api/employees/src",
+  "projectType": "library",
+  "tags": [
+    "scope:api",
+    "type:feature"
+  ],
+  "targets": {}
+}

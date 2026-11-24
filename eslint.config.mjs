@@ -27,12 +27,27 @@ export default [
                         "^.*/eslint(\\.base)?\\.config\\.[cm]?[jt]s$"
                     ],
                     depConstraints: [
+                        // El front solo puede usar código del front y lo compartido
                         {
-                            sourceTag: "*",
-                            onlyDependOnLibsWithTags: [
-                                "*"
-                            ]
-                        }
+                            sourceTag: "scope:web",
+                            onlyDependOnLibsWithTags: ["scope:web", "scope:shared"]
+                        },
+                        // El back solo puede usar código del back y lo compartido
+                        {
+                            sourceTag: "scope:api",
+                            onlyDependOnLibsWithTags: ["scope:api", "scope:shared"]
+                        },
+                        // Lo compartido no puede depender de web ni de api
+                        {
+                            sourceTag: "scope:shared",
+                            onlyDependOnLibsWithTags: ["scope:shared"]
+                        },
+                        // Reglas por tipo (rol de la librería)
+                        { sourceTag: "type:app",       onlyDependOnLibsWithTags: ["type:feature", "type:ui", "type:util", "type:contracts"] },
+                        { sourceTag: "type:feature",   onlyDependOnLibsWithTags: ["type:ui", "type:util", "type:contracts"] },
+                        { sourceTag: "type:ui",        onlyDependOnLibsWithTags: ["type:ui", "type:util", "type:contracts"] },
+                        { sourceTag: "type:util",      onlyDependOnLibsWithTags: ["type:util", "type:contracts"] },
+                        { sourceTag: "type:contracts", onlyDependOnLibsWithTags: ["type:contracts"] }
                     ]
                 }
             ]

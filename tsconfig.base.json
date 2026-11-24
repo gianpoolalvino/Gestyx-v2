@@ -20,6 +20,12 @@
     "paths": {
       "@gestyx/shared-contracts": [
         "./libs/shared/contracts/src/index.ts"
+      ],
+      "@gestyx/api-employees": [
+        "./libs/api/employees/src/index.ts"
+      ],
+      "@gestyx/web-employees": [
+        "./libs/web/employees/src/index.ts"
       ]
     }
   },

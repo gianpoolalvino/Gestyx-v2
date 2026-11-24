@@ -1,0 +1,52 @@
+# Desarrollo con recarga automática:
+#   docker compose -f docker-compose.dev.yml up --build
+x-dev-app: &dev-app
+  build:
+    context: .
+    dockerfile: docker/dev.Dockerfile
+  volumes:
+    - .:/workspace
+    - /workspace/node_modules   # conserva el node_modules del contenedor
+
+services:
+  db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    <<: *dev-app
+    command: npx nx serve api
+    env_file: .env
+    environment:
+      PORT: 3300
+      DB_HOST: db
+    ports:
+      - "3300:3300"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    <<: *dev-app
+    command: npx nx serve web --host 0.0.0.0
+    environment:
+      API_URL: http://api:3300
+    ports:
+      - "4200:4200"
+    depends_on:
+      - api
+
+volumes:
+  pgdata:
