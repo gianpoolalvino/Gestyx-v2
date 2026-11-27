@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
+import { MainLayout } from '@gestyx/shared-ui';
+import { APP_MENU } from './app-menu';
+import { AppTopbar } from './app-topbar/app-topbar';
+
 
 @Component({
-  imports: [NxWelcome, RouterModule],
+  imports: [MainLayout, AppTopbar],
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
+
 export class App {
-  protected title = 'web';
+  protected readonly menu = APP_MENU;
 }

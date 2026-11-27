@@ -1,2 +1,7 @@
-/* You can add global styles to this file, and also import other style files */
+/* Orden de capas: primeng queda por encima de base y por debajo de las utilidades de Tailwind */
+@layer theme, base, primeng, components, utilities;
+
+@import "primeicons/primeicons.css";
 @import "tailwindcss";
+@custom-variant dark (&:where(.app-dark, .app-dark *));
+@plugin "tailwindcss-primeui";

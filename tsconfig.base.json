@@ -26,6 +26,9 @@
       ],
       "@gestyx/web-employees": [
         "./libs/web/employees/src/index.ts"
+      ],
+      "@gestyx/shared-ui": [
+        "./libs/shared/ui/src/index.ts"
       ]
     }
   },
